@@ -1,0 +1,32 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datos Personales</title>
+</head>
+<body>
+    
+    <h2>Jugando con JS</h2>
+    <button onclick="mostrarDatos()" >Mostrar mis datos</button>
+
+    <script>
+        function mostrarDatos(){
+            let nombre = "Kelly Jocelyn Aramburo Gonzalez";
+            let edad = 21;
+            let peso = 50;
+            let estatura = 1.56;
+            let deboMaterias = true;
+
+            alert(
+                "Nombre: " + nombre + 
+                "\nEdad: " + edad + " años" +
+                "\nPeso: " + peso + " kg" +
+                "\nEstatura: " + estatura + " m" +
+                "\nDebo materias: " + deboMaterias
+            );
+        }
+    </script>
+
+</body>
+</html>
