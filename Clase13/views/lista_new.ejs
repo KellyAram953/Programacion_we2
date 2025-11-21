@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<h2 style="text-align:center;">Agregar Nuevo Registro</h2>
+
+<form method="POST" action="/lista/agregar" style="width:300px; margin:auto;">
+
+    <label>Nombre:</label>
+    <input type="text" name="nombre" required>
+
+    <label>Correo:</label>
+    <input type="email" name="correo" required>
+
+    <label>Institución:</label>
+    <input type="text" name="institucion" required>
+
+    <button type="submit">Guardar</button>
+</form>
+
+<div style="text-align:center; margin-top:20px;">
+    <a href="/lista">
+        <button>Regresar</button>
+    </a>
+</div>
+
+</body>
+</html>
+
+

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Usuarios</title>
+</head>
+<body>
+
+<h1>Usuarios Registrados</h1>
+
+<a href="/usuarios/nuevo">Agregar Usuario</a>
+<br><br>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Correo</th>
+        <th>Institución</th>
+        <th>Editar</th>
+        <th>Eliminar</th>
+    </tr>
+
+    <% usuarios.forEach(u => { %>
+    <tr>
+        <td><%= u.id %></td>
+
+        <td>
+            <%= u.nombre %>
+            <form action="/usuarios/editar/nombre/<%= u.id %>" method="POST">
+                <input type="text" name="nombre">
+                <button>Modificar</button>
+            </form>
+        </td>
+
+        <td>
+            <%= u.correo %>
+            <form action="/usuarios/editar/correo/<%= u.id %>" method="POST">
+                <input type="email" name="correo">
+                <button>Modificar</button>
+            </form>
+        </td>
+
+        <td>
+            <%= u.institucion %>
+            <form action="/usuarios/editar/institucion/<%= u.id %>" method="POST">
+                <input type="text" name="institucion">
+                <button>Modificar</button>
+            </form>
+        </td>
+
+        <td>
+            <a href="/usuarios/eliminar/<%= u.id %>">Eliminar</a>
+        </td>
+    </tr>
+    <% }) %>
+
+</table>
+
+</body>
+</html>
+

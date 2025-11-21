@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuevo Usuario</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Agregar Usuario</h1>
+
+    <form action="/users/add" method="POST">
+        <label>Nombre:</label>
+        <input type="text" name="name" required>
+
+        <label>Correo:</label>
+        <input type="email" name="email" required>
+
+        <label>Contraseña:</label>
+        <input type="password" name="password" required>
+
+        <button type="submit">Agregar</button>
+
+        <!-- Al final del formulario o al final de la página -->
+<a class="btn-principal" href="/">Regresar</a>
+
+    </form>
+
+</div>
+
+<!-- ===== MODAL DE CONFIRMACIÓN ===== -->
+
+<% let mensajeFinal = typeof mensaje !== "undefined" ? mensaje : ""; %>
+
+<div id="mensajeModal" class="modal" style="<%= mensajeFinal ? 'display:flex' : 'display:none' %>">
+
+    <div class="modal-content">
+        <h3><%= mensajeFinal %></h3>
+        <button onclick="cerrarModal()">Aceptar</button>
+    </div>
+
+</div>
+
+<script>
+    function cerrarModal() {
+        document.getElementById("mensajeModal").style.display = "none";
+    }
+</script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+

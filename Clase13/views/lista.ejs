@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Lista</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<div class="contenedor">
+    <h1>Lista</h1>
+
+    <!-- FORMULARIO AGREGAR -->
+    <form action="/lista/agregar" method="POST">
+        <label>Nombre:</label>
+        <input type="text" name="nombre" required>
+
+        <label>Correo:</label>
+        <input type="email" name="correo" required>
+
+        <label>Institución:</label>
+        <input type="text" name="institucion" required>
+
+        <button type="submit">Agregar</button>
+    </form>
+
+    <!-- TABLA DE DATOS -->
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Correo</th>
+                <th>Institución</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% datos.forEach(d => { %>
+            <tr>
+                <td><%= d.id %></td>
+                <td><%= d.nombre %></td>
+                <td><%= d.correo %></td>
+                <td><%= d.institucion %></td>
+                <td>
+                    <button class="btn-edit" onclick="mostrar(<%= d.id %>)">Editar</button>
+                    <button class="btn-delete" onclick="eliminar(<%= d.id %>)">Eliminar</button>
+                </td>
+            </tr>
+
+            <!-- FORMULARIOS DE ACTUALIZAR -->
+            <tr id="box-<%= d.id %>" class="actualizar-box">
+                <td colspan="5">
+                    <form onsubmit="return mostrarModal('<%= d.id %>', 'nombre');">
+                        <label>Actualizar nombre:</label>
+                        <input type="text" id="nombre-<%= d.id %>" value="<%= d.nombre %>">
+                        <button type="submit">Actualizar</button>
+                    </form>
+
+                    <form onsubmit="return mostrarModal('<%= d.id %>', 'correo');">
+                        <label>Actualizar correo:</label>
+                        <input type="email" id="correo-<%= d.id %>" value="<%= d.correo %>">
+                        <button type="submit">Actualizar</button>
+                    </form>
+
+                    <form onsubmit="return mostrarModal('<%= d.id %>', 'institucion');">
+                        <label>Actualizar institución:</label>
+                        <input type="text" id="institucion-<%= d.id %>" value="<%= d.institucion %>">
+                        <button type="submit">Actualizar</button>
+                    </form>
+                </td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+
+    <a class="btn-regresar" href="/">Regresar</a>
+
+    <!-- MODAL -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h3>¿Deseas guardar los cambios?</h3>
+            <button id="guardarBtn">Guardar</button>
+            <button onclick="cerrarModal()">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<script>
+let idActual, campoActual;
+
+function mostrar(id) {
+    let box = document.getElementById("box-" + id);
+    box.style.display = box.style.display === "none" ? "table-row" : "none";
+}
+
+function eliminar(id) {
+    fetch(`/lista/eliminar/${id}`, { method: "POST" })
+    .then(r => r.json())
+    .then(data => { if(data.success) location.reload(); });
+}
+
+// Modal
+function mostrarModal(id, campo) {
+    idActual = id;
+    campoActual = campo;
+    document.getElementById("modal").style.display = "flex";
+    return false; // Evitar submit
+}
+
+function cerrarModal() {
+    document.getElementById("modal").style.display = "none";
+}
+
+document.getElementById("guardarBtn").addEventListener("click", () => {
+    const valor = document.getElementById(`${campoActual}-${idActual}`).value;
+
+    fetch(`/lista/actualizar/${campoActual}/${idActual}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({ nuevoValor: valor })
+    }).then(() => location.reload());
+});
+</script>
+
+</body>
+</html>
